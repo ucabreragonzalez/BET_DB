@@ -1,12 +1,12 @@
 DELIMITER $$
 drop procedure if exists sp_whalebets_o25;
 
-create procedure sp_whalebets_o25(in in_strategy_nm varchar(100), in in_division_cd varchar(10), in in_match_dt date, in in_home_team_nm varchar(20), in in_away_team_nm varchar(20))
+create procedure sp_whalebets_o25(in in_strategy_nm varchar(100), in in_division_cd varchar(10), in in_match_dt date, in in_home_team_nm varchar(50), in in_away_team_nm varchar(50))
 begin
 	declare lv_strategy_nm varchar(100);
 	declare ld_match_dt date;
-	declare lv_home_team varchar(20);
-	declare lv_away_team varchar(20);
+	declare lv_home_team varchar(50);
+	declare lv_away_team varchar(50);
 	declare li_prev_matches int;
 	declare li_prev_days int;
     
@@ -18,9 +18,8 @@ begin
 	set li_prev_days = null; -- this could be an extra param
 
 	begin
-		drop table if exists tmp_team_results;
-        call  sp_get_temp_results(ld_match_dt, lv_home_team, null, li_prev_matches, null);
-        call  sp_get_temp_results(ld_match_dt, null, lv_away_team, li_prev_matches, null);
+        call  sp_get_temp_results(ld_match_dt, lv_home_team, null, li_prev_matches, null, true);
+        call  sp_get_temp_results(ld_match_dt, null, lv_away_team, li_prev_matches, null, false);
     
 		DELETE FROM t_strategy_results 
 		WHERE

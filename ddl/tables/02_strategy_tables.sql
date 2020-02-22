@@ -16,8 +16,8 @@ CREATE TABLE t_strategy_results (
     division_cd VARCHAR(10) NOT NULL,
     match_dt DATE NOT NULL,
     match_time TIME,
-    home_team_nm VARCHAR(20) NOT NULL,
-    away_team_nm VARCHAR(20) NOT NULL,
+    home_team_nm VARCHAR(50) NOT NULL,
+    away_team_nm VARCHAR(50) NOT NULL,
     result_score DECIMAL,
     description VARCHAR(100),
     created_dt DATETIME

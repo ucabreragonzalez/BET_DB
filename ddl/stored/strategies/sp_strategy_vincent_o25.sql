@@ -1,17 +1,17 @@
 DELIMITER $$
 drop procedure if exists sp_strategy_vicent_o25;
 
-create procedure sp_strategy_vicent_o25(in in_strategy_nm varchar(100), in in_division_cd varchar(10), in in_match_dt date, in in_home_team_nm varchar(20), in in_away_team_nm varchar(20))
+create procedure sp_strategy_vicent_o25(in in_strategy_nm varchar(100), in in_division_cd varchar(10), in in_match_dt date, in in_home_team_nm varchar(50), in in_away_team_nm varchar(50))
 begin
 	declare lv_strategy_nm varchar(100);
 	declare ld_match_dt date;
-	declare lv_home_team varchar(20);
-	declare lv_away_team varchar(20);
+	declare lv_home_team varchar(50);
+	declare lv_away_team varchar(50);
 	declare li_prev_matches int;
 	declare li_prev_days int;
     
-    declare ld_goals_weight decimal(2,2);
-    declare ld_2_scored_weight decimal(2,2);
+    declare ld_goals_weight decimal(3,1);
+    declare ld_2_scored_weight decimal(3,1);
     
 	set lv_strategy_nm = in_strategy_nm;
 	set ld_match_dt = in_match_dt; -- current_date();
@@ -24,9 +24,8 @@ begin
 	set ld_2_scored_weight = 6 / (li_prev_matches * 2);
 
 	begin
-		drop table if exists tmp_team_results;
-        call  sp_get_temp_results(ld_match_dt, lv_home_team, lv_home_team, 4, null);
-        call  sp_get_temp_results(ld_match_dt, lv_away_team, lv_away_team, 4, null);
+        call  sp_get_temp_results(ld_match_dt, lv_home_team, lv_home_team, li_prev_matches, null, true);
+        call  sp_get_temp_results(ld_match_dt, lv_away_team, lv_away_team, li_prev_matches, null, false);
     
 		DELETE FROM t_strategy_results 
 		WHERE

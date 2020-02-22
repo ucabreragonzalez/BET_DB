@@ -7,8 +7,8 @@ begin
     
     declare lv_division_cd varchar(10);
     declare ld_match_dt date;
-    declare lv_home_team_nm varchar(20);
-    declare lv_away_team_nm varchar(20);
+    declare lv_home_team_nm varchar(50);
+    declare lv_away_team_nm varchar(50);
     
     set ld_date_from = coalesce(in_date_from, current_date());
     set ld_date_to = coalesce(in_date_to, ld_date_from);
@@ -40,8 +40,9 @@ begin
 			END IF;
             
             -- List of strategies below
-            call sp_strategy_vicent_o25('Vincent''s >2.5 Goals' ,lv_division_cd, ld_match_dt, lv_home_team_nm, lv_away_team_nm);
-            call sp_whalebets_o25('Whalebets >2.5 Goals' ,lv_division_cd, ld_match_dt, lv_home_team_nm, lv_away_team_nm);
+            call sp_strategy_vicent_o25('Vincent''s >2.5 G' ,lv_division_cd, ld_match_dt, lv_home_team_nm, lv_away_team_nm);
+            call sp_whalebets_o25('Whalebets >2.5 G' ,lv_division_cd, ld_match_dt, lv_home_team_nm, lv_away_team_nm);
+            call sp_andreas_h2h_o25('Andreas h2h >2.5 G' ,lv_division_cd, ld_match_dt, lv_home_team_nm, lv_away_team_nm);
         END LOOP fixtures_loop;
     end;
 end$$
