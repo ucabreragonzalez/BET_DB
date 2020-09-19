@@ -35,29 +35,26 @@ begin
 			AND home_team_nm = lv_home_team
 			AND away_team_nm = lv_away_team;
     
-	insert into t_strategy_results (strategy_nm, division_cd, match_dt, home_team_nm, away_team_nm, result_score, description)
-		SELECT 
-			lv_strategy_nm,
-			in_division_cd,
-			ld_match_dt,
-			lv_home_team,
-			lv_away_team,
-			ROUND(SUM(over_goals) + SUM(both_scored), 1),
-			CONCAT(IF(SUM(over_goals) + SUM(both_scored) >= 0, '+', '-'),'2.5 goals | '
-				, ROUND((SUM(IF(total_goals > 2.5, 1, 0)) / COUNT(*)) * 100, 1), '% >2.5')
-		FROM
-			(SELECT 
-				CONCAT(lv_home_team, ' vs ', lv_away_team) AS match_nm,
-					ld_match_dt AS match_dt,
-					full_time_home_team_goals,
-					full_time_away_team_goals,
-					full_time_home_team_goals + full_time_away_team_goals AS total_goals,
-					IF(full_time_home_team_goals + full_time_away_team_goals > 2.5, 1, - 1) * ld_goals_weight AS over_goals,
-					IF(full_time_home_team_goals > 0
-						AND full_time_away_team_goals > 0, 1, - 1) * ld_2_scored_weight AS both_scored
+			insert into t_strategy_results (strategy_nm, division_cd, match_dt, home_team_nm, away_team_nm, score, forecast, matches_analized, percentage_passed, description)
+			SELECT 
+				lv_strategy_nm,
+				in_division_cd,
+				ld_match_dt,
+				lv_home_team,
+				lv_away_team,
+				ROUND(SUM(over_goals) + SUM(both_scored), 1) AS score,
+				CONCAT(IF(SUM(over_goals) + SUM(both_scored) >= 0,'+','-'), '2.5 goals') AS forecast,
+				COUNT(*) AS matches_analized,
+				ROUND((SUM(IF(total_goals > 2.5, 1, 0)) / COUNT(*)) * 100, 1) AS percentage_passed,
+				'Last 8 matches | Score > 0 = +2.5 goals' AS description
 			FROM
-				tmp_team_results) x
-		GROUP BY match_nm , match_dt;
+				(SELECT 
+					full_time_home_team_goals + full_time_away_team_goals AS total_goals,
+						IF(full_time_home_team_goals + full_time_away_team_goals > 2.5, 1, - 1) * ld_goals_weight AS over_goals,
+						IF(full_time_home_team_goals > 0
+							AND full_time_away_team_goals > 0, 1, - 1) * ld_2_scored_weight AS both_scored
+				FROM
+					tmp_team_results) x;
 	end;
 end$$
 
