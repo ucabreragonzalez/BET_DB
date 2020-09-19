@@ -18,10 +18,10 @@ CREATE TABLE t_strategy_results (
     match_time TIME,
     home_team_nm VARCHAR(50) NOT NULL,
     away_team_nm VARCHAR(50) NOT NULL,
-    score DECIMAL,
+    score DECIMAL(5,1),
     forecast VARCHAR(50),
     matches_analized DECIMAL,
-    percentage_passed DECIMAL,
+    percentage_passed DECIMAL(5,1),
     description VARCHAR(100),
     created_dt DATETIME
 );
