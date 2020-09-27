@@ -69,6 +69,8 @@ CREATE TABLE t_results (
     away_team_yellow_cards INT,
     home_team_red_cards INT,
     away_team_red_cards INT,
+    o25_odd DECIMAL(5,2),
+    u25_odd DECIMAL(5,2),
     created_dt DATETIME,
     PRIMARY KEY t_results_pk (division_cd , match_dt , home_team_nm , away_team_nm),
     CONSTRAINT tresults_divisioncd_fk FOREIGN KEY (division_cd)
@@ -87,6 +89,8 @@ CREATE TABLE t_fixtures (
     match_time TIME,
     home_team_nm VARCHAR(50) NOT NULL,
     away_team_nm VARCHAR(50) NOT NULL,
+    o25_odd DECIMAL(5,2),
+    u25_odd DECIMAL(5,2),
     created_dt DATETIME,
     PRIMARY KEY t_results_pk (division_cd , match_dt , home_team_nm , away_team_nm),
     CONSTRAINT tfixtures_divisioncd_fk FOREIGN KEY (division_cd)
