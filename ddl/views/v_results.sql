@@ -26,6 +26,8 @@ CREATE OR REPLACE VIEW v_results AS
         r.away_team_yellow_cards,
         r.home_team_red_cards,
         r.away_team_red_cards,
+        r.o25_odd,
+        r.u25_odd,
         r.created_dt
     FROM
         t_results r

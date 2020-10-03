@@ -7,6 +7,8 @@ CREATE OR REPLACE VIEW v_fixtures AS
         f.match_time,
         f.home_team_nm,
         f.away_team_nm,
+        f.o25_odd,
+        f.u25_odd,
         f.created_dt
     FROM
         t_fixtures f
