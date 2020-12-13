@@ -46,6 +46,7 @@ CREATE
 -- RESULTS
 CREATE TABLE t_results (
     division_cd VARCHAR(10) NOT NULL,
+    season INT,
     match_dt DATE NOT NULL,
     match_time TIME,
     home_team_nm VARCHAR(50) NOT NULL,
@@ -85,6 +86,7 @@ CREATE
 -- FIXTURES
 CREATE TABLE t_fixtures (
     division_cd VARCHAR(10) NOT NULL,
+    season INT,
     match_dt DATE NOT NULL,
     match_time TIME,
     home_team_nm VARCHAR(50) NOT NULL,

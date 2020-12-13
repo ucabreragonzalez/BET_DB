@@ -3,6 +3,7 @@ CREATE OR REPLACE VIEW v_fixtures AS
         s.sport_nm,
         c.country_nm,
         d.division_nm,
+        f.season,
         f.match_dt,
         f.match_time,
         f.home_team_nm,

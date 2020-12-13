@@ -3,6 +3,7 @@ CREATE OR REPLACE VIEW v_results AS
         s.sport_nm,
         c.country_nm,
         d.division_nm,
+        r.season,
         r.match_dt,
         r.match_time,
         r.home_team_nm,

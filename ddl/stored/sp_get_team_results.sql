@@ -22,9 +22,18 @@ begin
 			v_results
 		WHERE
 			1 = 1
-				AND ((in_prev_days IS NULL)
-				OR (in_prev_days IS NOT NULL
-				AND match_dt BETWEEN in_match_dt - INTERVAL in_prev_days DAY AND in_match_dt))
+				AND
+                (
+					(
+						in_prev_days IS NULL
+                        AND match_dt < in_match_dt
+					)
+					OR	
+					(
+						in_prev_days IS NOT NULL
+						AND match_dt BETWEEN in_match_dt - INTERVAL in_prev_days DAY AND in_match_dt
+					)
+                )
 				AND CASE
 				WHEN
 					in_home_team_nm IS NOT NULL
