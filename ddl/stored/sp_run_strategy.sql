@@ -44,6 +44,9 @@ begin
             call sp_whalebets_o25('Whalebets >2.5 G' ,lv_division_cd, ld_match_dt, lv_home_team_nm, lv_away_team_nm);
             call sp_andreas_h2h_o25('Andreas h2h >2.5 G' ,lv_division_cd, ld_match_dt, lv_home_team_nm, lv_away_team_nm);
         END LOOP fixtures_loop;
+
+        call sp_goals_expected_o25(ld_date_from, ld_date_to);
+
     end;
 end$$
 DELIMITER ;

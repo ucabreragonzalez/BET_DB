@@ -19,6 +19,8 @@ CREATE OR REPLACE VIEW v_strategy_results AS
         IF(r.full_time_home_team_goals IS NULL,
             NULL,
             CASE
+                WHEN coalesce(sr.forecast, 'NA') = 'NA'
+                    THEN 'NA'
                 WHEN
                     sr.forecast = '+2.5 goals'
                         AND r.full_time_home_team_goals + r.full_time_away_team_goals > 2.5
