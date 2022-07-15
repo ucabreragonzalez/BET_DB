@@ -1,6 +1,6 @@
 DELIMITER $$
 DROP FUNCTION IF EXISTS getGoalsExpected;
-CREATE FUNCTION getGoalsExpected(in_leg varchar(1), in_division_nm varchar(50), in_home_team_nm varchar(50), in_away_team_nm varchar(50), in_season INT, in_match_dt date)
+CREATE FUNCTION getGoalsExpected(in_leg varchar(1), in_division_cd VARCHAR(10), in_home_team_nm varchar(50), in_away_team_nm varchar(50), in_season INT, in_match_dt date)
 RETURNS DECIMAL(13,10)
 DETERMINISTIC
 BEGIN
@@ -9,7 +9,7 @@ BEGIN
 			with tmp_results as
 			( select * from t_results
 			where season = in_season
-            and division_cd = (select division_cd from t_division where division_nm = in_division_nm)
+            and division_cd = in_division_cd
 			and match_dt < coalesce(in_match_dt, match_dt)
 			)
 			, div_goals_avg as
