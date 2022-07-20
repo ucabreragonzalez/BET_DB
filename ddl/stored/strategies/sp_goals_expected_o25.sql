@@ -34,12 +34,12 @@ begin
 		( select 
 			vf.*
 			, getOV25_probability(
-				getGoalsExpected('H', vf.division_cd, vf.home_team_nm, vf.away_team_nm, getSeason(vf.season, -1), vf.match_dt),
-				getGoalsExpected('A', vf.division_cd, vf.home_team_nm, vf.away_team_nm, getSeason(vf.season, -1), vf.match_dt)
+				getGoalsExpected('H', vf.division_cd, vf.home_team_nm, vf.away_team_nm, getSeason(vf.division_cd, vf.season, -1), vf.match_dt),
+				getGoalsExpected('A', vf.division_cd, vf.home_team_nm, vf.away_team_nm, getSeason(vf.division_cd, vf.season, -1), vf.match_dt)
 			) as OV25prob_minus_1
             , getOV25_probability(
-				getGoalsExpected('H', vf.division_cd, vf.home_team_nm, vf.away_team_nm, getSeason(vf.season, 0), vf.match_dt),
-				getGoalsExpected('A', vf.division_cd, vf.home_team_nm, vf.away_team_nm, getSeason(vf.season, 0), vf.match_dt)
+				getGoalsExpected('H', vf.division_cd, vf.home_team_nm, vf.away_team_nm, getSeason(vf.division_cd, vf.season, 0), vf.match_dt),
+				getGoalsExpected('A', vf.division_cd, vf.home_team_nm, vf.away_team_nm, getSeason(vf.division_cd, vf.season, 0), vf.match_dt)
 			) as OV25prob_current
 		from tmp_fixtures vf
 		)
