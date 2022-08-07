@@ -43,7 +43,7 @@ begin
 				lv_home_team,
 				lv_away_team,
 				ROUND(SUM(over_goals) + SUM(both_scored), 1) AS score,
-				CONCAT(IF(SUM(over_goals) + SUM(both_scored) >= 0,'+','-'), '2.5 goals') AS forecast,
+				CONCAT(IF(SUM(over_goals) + SUM(both_scored) > 0,'+','-'), '2.5 goals') AS forecast,
 				COUNT(*) AS matches_analized,
 				ROUND((SUM(IF(total_goals > 2.5, 1, 0)) / COUNT(*)) * 100, 1) AS percentage_passed,
 				'Last 8 matches | Score > 0 = +2.5 goals' AS description
