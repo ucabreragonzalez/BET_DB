@@ -109,3 +109,29 @@ CREATE
     TRIGGER  tfixtures_bi_trg
  BEFORE INSERT ON t_fixtures FOR EACH ROW 
     SET NEW . created_dt = NOW();
+
+
+-- TEAMS
+CREATE TABLE t_teams (
+  team_id INT NOT NULL AUTO_INCREMENT,
+  team_nm varchar(50) UNIQUE NOT NULL,
+  PRIMARY KEY t_teams_pk (team_id)
+);
+
+-- MONITORED EVENTS
+CREATE TABLE t_selected_match (
+    division_cd VARCHAR(10) NOT NULL,
+    match_dt DATE NOT NULL,
+    home_team_nm VARCHAR(50) NOT NULL,
+    away_team_nm VARCHAR(50) NOT NULL,
+    strategy_nm VARCHAR(100) NULL,
+    forecast VARCHAR(50) NULL,
+    user_nm VARCHAR(50) NOT NULL,
+    created_dt DATETIME NULL,
+    PRIMARY KEY t_selected_match_pk (division_cd, match_dt, home_team_nm, away_team_nm, user_nm)
+);
+
+CREATE 
+    TRIGGER  tselectedmatch_bi_trg
+ BEFORE INSERT ON t_selected_match FOR EACH ROW 
+    SET NEW . created_dt = NOW();

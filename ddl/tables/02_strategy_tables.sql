@@ -1,15 +1,3 @@
--- Strategy
--- CREATE TABLE t_strategy (
---     strategy_nm VARCHAR(100) NOT NULL UNIQUE,
---     strategy_query TEXT,
---     created_dt DATETIME
--- );
-
--- CREATE 
---     TRIGGER  t_strategy_bi_trg
---  BEFORE INSERT ON t_strategy FOR EACH ROW 
---     SET NEW . created_dt = NOW();
-
 -- Strategy Results
 CREATE TABLE t_strategy_results (
     strategy_nm VARCHAR(100) NOT NULL,
