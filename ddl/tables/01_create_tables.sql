@@ -78,9 +78,11 @@ CREATE TABLE t_results (
         REFERENCES t_division (division_cd)
 );
 
+CREATE INDEX tresults_divcdseason_ndx ON t_results (division_cd, season);
+
 CREATE 
     TRIGGER  tresults_bi_trg
- BEFORE INSERT ON t_results FOR EACH ROW 
+ BEFORE INSERT ON t_results FOR EACH ROW
     SET NEW . created_dt = NOW();
 
 -- FIXTURES
@@ -134,4 +136,30 @@ CREATE TABLE t_selected_match (
 CREATE 
     TRIGGER  tselectedmatch_bi_trg
  BEFORE INSERT ON t_selected_match FOR EACH ROW 
+    SET NEW . created_dt = NOW();
+
+-- TEAM STRENGTH
+CREATE TABLE t_team_strength (
+    season INT NOT NULL,
+    division_cd VARCHAR(10) NOT NULL,
+    team_nm VARCHAR(50) NOT NULL,
+    home_attack_strength DECIMAL(8,4),
+    home_defence_strength DECIMAL(8,4),
+    away_attack_strength DECIMAL(8,4),
+    away_defence_strength DECIMAL(8,4),
+    league_home_scored_avg DECIMAL(8,4),
+    league_away_scored_avg DECIMAL(8,4),
+    league_home_conceded_avg DECIMAL(8,4),
+    league_away_conceded_avg DECIMAL(8,4),
+    calculated_dt DATE,
+    created_dt DATETIME
+);
+
+ALTER TABLE t_team_strength
+	ADD CONSTRAINT t_team_strength_pk
+    PRIMARY KEY (season, division_cd, team_nm, calculated_dt);
+
+CREATE 
+    TRIGGER t_strategy_res_bi_trg
+ BEFORE INSERT ON t_team_strength FOR EACH ROW 
     SET NEW . created_dt = NOW();
