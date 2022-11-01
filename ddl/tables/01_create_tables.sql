@@ -160,6 +160,6 @@ ALTER TABLE t_team_strength
     PRIMARY KEY (season, division_cd, team_nm, calculated_dt);
 
 CREATE 
-    TRIGGER t_strategy_res_bi_trg
+    TRIGGER t_team_strength_bi_trg
  BEFORE INSERT ON t_team_strength FOR EACH ROW 
     SET NEW . created_dt = NOW();
