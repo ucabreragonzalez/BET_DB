@@ -78,9 +78,11 @@ CREATE TABLE t_results (
         REFERENCES t_division (division_cd)
 );
 
+CREATE INDEX tresults_divcdseason_ndx ON t_results (division_cd, season);
+
 CREATE 
     TRIGGER  tresults_bi_trg
- BEFORE INSERT ON t_results FOR EACH ROW 
+ BEFORE INSERT ON t_results FOR EACH ROW
     SET NEW . created_dt = NOW();
 
 -- FIXTURES
@@ -108,4 +110,56 @@ CREATE INDEX tfixtures_awayteamnm_ndx ON t_fixtures (away_team_nm desc);
 CREATE 
     TRIGGER  tfixtures_bi_trg
  BEFORE INSERT ON t_fixtures FOR EACH ROW 
+    SET NEW . created_dt = NOW();
+
+
+-- TEAMS
+CREATE TABLE t_teams (
+  team_id INT NOT NULL AUTO_INCREMENT,
+  team_nm varchar(50) UNIQUE NOT NULL,
+  PRIMARY KEY t_teams_pk (team_id)
+);
+
+-- MONITORED EVENTS
+CREATE TABLE t_selected_match (
+    division_cd VARCHAR(10) NOT NULL,
+    match_dt DATE NOT NULL,
+    home_team_nm VARCHAR(50) NOT NULL,
+    away_team_nm VARCHAR(50) NOT NULL,
+    strategy_nm VARCHAR(100) NULL,
+    forecast VARCHAR(50) NULL,
+    user_nm VARCHAR(50) NOT NULL,
+    created_dt DATETIME NULL,
+    PRIMARY KEY t_selected_match_pk (division_cd, match_dt, home_team_nm, away_team_nm, user_nm)
+);
+
+CREATE 
+    TRIGGER  tselectedmatch_bi_trg
+ BEFORE INSERT ON t_selected_match FOR EACH ROW 
+    SET NEW . created_dt = NOW();
+
+-- TEAM STRENGTH
+CREATE TABLE t_team_strength (
+    season INT NOT NULL,
+    division_cd VARCHAR(10) NOT NULL,
+    team_nm VARCHAR(50) NOT NULL,
+    home_attack_strength DECIMAL(8,4),
+    home_defence_strength DECIMAL(8,4),
+    away_attack_strength DECIMAL(8,4),
+    away_defence_strength DECIMAL(8,4),
+    league_home_scored_avg DECIMAL(8,4),
+    league_away_scored_avg DECIMAL(8,4),
+    league_home_conceded_avg DECIMAL(8,4),
+    league_away_conceded_avg DECIMAL(8,4),
+    calculated_dt DATE,
+    created_dt DATETIME
+);
+
+ALTER TABLE t_team_strength
+	ADD CONSTRAINT t_team_strength_pk
+    PRIMARY KEY (season, division_cd, team_nm, calculated_dt);
+
+CREATE 
+    TRIGGER t_team_strength_bi_trg
+ BEFORE INSERT ON t_team_strength FOR EACH ROW 
     SET NEW . created_dt = NOW();
