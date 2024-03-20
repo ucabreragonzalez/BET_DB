@@ -24,3 +24,9 @@ SELECT
     'Liga Profesional',
     (select sport_id from t_sport where sport_nm = 'Soccer'),
     (select country_id from t_country where country_nm = 'Argentina');
+insert into t_division (division_cd, division_nm, sport_id, country_id)
+SELECT 
+    'ARG1',
+    'Copa De La Liga Profesional',
+    (select sport_id from t_sport where sport_nm = 'Soccer'),
+    (select country_id from t_country where country_nm = 'Argentina');
